@@ -22,5 +22,9 @@ public class Model {
 	public Studente getStudente(String matricola) {
 		return studenteDao.getStudente(matricola);
 	}
+	
+	public List<Studente> getStudentiByCorso(String codice) {
+		return corsoDao.getStudentiIscrittiAlCorso(new Corso(codice, null, null, null));
+	}
 
 }

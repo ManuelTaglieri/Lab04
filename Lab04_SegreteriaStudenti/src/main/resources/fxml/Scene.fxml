@@ -27,7 +27,7 @@
                   <ComboBox fx:id="boxCorsi" prefWidth="150.0" />
                </children>
             </HBox>
-            <Button fx:id="btnCercaI" mnemonicParsing="false" onAction="#cercaIscrivi" text="Cerca iscritti corso" />
+            <Button fx:id="btnCercaI" mnemonicParsing="false" onAction="#cercaIscritti" text="Cerca iscritti corso" />
             <HBox spacing="10.0">
                <children>
                   <Label text="Studente: " />

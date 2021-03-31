@@ -1,6 +1,7 @@
 package it.polito.tdp.lab04;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.lab04.model.Corso;
@@ -59,7 +60,18 @@ public class FXMLController {
     }
 
     @FXML
-    void cercaIscrivi(ActionEvent event) {
+    void cercaIscritti(ActionEvent event) {
+    	   	
+    	if (boxCorsi == null || boxCorsi.getValue().equals("")) {
+    		txtResult.setText("Scegliere un corso dal menù a tendina");
+    	}
+    	else {
+    		txtResult.clear();
+    		List<Studente> studenti = model.getStudentiByCorso(boxCorsi.getValue().substring(0, 7));
+    		for (Studente s : studenti) {
+    			txtResult.appendText(s + "\n");
+    		}
+    	}
 
     }
 
@@ -112,7 +124,7 @@ public class FXMLController {
     	this.boxCorsi.getItems().add("");
     	
     	for (Corso c : this.model.getTuttiICorsi()) {
-    		boxCorsi.getItems().add(c.getNome() + " - " + c.getCodins());
+    		boxCorsi.getItems().add(c.getCodins() + " - " + c.getNome());
     	}
     	
     }
