@@ -55,7 +55,26 @@ public class FXMLController {
     private Button btnReset;
 
     @FXML
-    void cercaCorso(ActionEvent event) {
+    void cercaCorsi(ActionEvent event) {
+    	
+    	txtResult.clear();
+    	
+    	try {
+    		List<Corso> corsi = model.getCorsiByStudente(Integer.parseInt(txtMatricola.getText()));
+    		
+    		if (corsi.isEmpty()) {
+    			txtResult.setText("Studente non iscritto ad alcun corso.");
+    			return;
+    		}
+    	
+    		for (Corso c : corsi) {
+    			txtResult.appendText(c + "\n");
+    		}
+    	} catch (NumberFormatException e) {
+    		txtResult.setText("Errore: la matricola può contenere solo numeri.");
+    		return;
+    	}
+    	
 
     }
 

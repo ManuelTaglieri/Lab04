@@ -61,6 +61,41 @@ public class CorsoDAO {
 	public void getCorso(Corso corso) {
 		// TODO
 	}
+	
+	public List<Corso> getCorsiByStudente(Studente studente) {
+			String sql = "SELECT c.codins, c.crediti, c.nome, c.pd "
+					+ "FROM corso AS c, iscrizione AS i "
+					+ "WHERE c.codins=i.codins AND i.matricola = ?";
+			
+			List<Corso> result = new LinkedList<Corso>();
+			
+			try {
+				Connection conn = ConnectDB.getConnection();
+				PreparedStatement st = conn.prepareStatement(sql);
+				st.setInt(1, studente.getMatricola());
+				ResultSet rs = st.executeQuery();
+				
+				while(rs.next()) {
+					
+					String codins = rs.getString("codins");
+					int numeroCrediti = rs.getInt("crediti");
+					String nome = rs.getString("nome");
+					int periodoDidattico = rs.getInt("pd");
+					
+					
+					result.add(new Corso(codins, numeroCrediti, nome, periodoDidattico));
+				}
+				
+				rs.close();
+				st.close();
+				conn.close();
+				
+			} catch (SQLException e) {
+				throw new RuntimeException("Errore Db", e);
+			}
+			
+			return result;
+	}
 
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
@@ -88,7 +123,7 @@ public class CorsoDAO {
 			conn.close();
 			
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Errore Db", e);
 		}
 		
 		return result;

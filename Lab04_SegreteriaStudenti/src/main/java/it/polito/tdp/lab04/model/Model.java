@@ -26,5 +26,9 @@ public class Model {
 	public List<Studente> getStudentiByCorso(String codice) {
 		return corsoDao.getStudentiIscrittiAlCorso(new Corso(codice, null, null, null));
 	}
+	
+	public List<Corso> getCorsiByStudente(Integer matricola) {
+		return corsoDao.getCorsiByStudente(new Studente(matricola, null, null, null));
+	}
 
 }
