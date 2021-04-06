@@ -30,5 +30,9 @@ public class Model {
 	public List<Corso> getCorsiByStudente(Integer matricola) {
 		return corsoDao.getCorsiByStudente(new Studente(matricola, null, null, null));
 	}
+	
+	public boolean isciriviStudenteACorso(Integer matricola, String codice) {
+		return corsoDao.iscriviStudenteACorso(new Studente(matricola, null, null, null), new Corso(codice, null, null, null));
+	}
 
 }

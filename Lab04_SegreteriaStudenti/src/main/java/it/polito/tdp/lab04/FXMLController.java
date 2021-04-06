@@ -80,6 +80,8 @@ public class FXMLController {
 
     @FXML
     void cercaIscritti(ActionEvent event) {
+    	
+    	txtResult.clear();
     	   	
     	if (boxCorsi == null || boxCorsi.getValue().equals("")) {
     		txtResult.setText("Scegliere un corso dal menù a tendina");
@@ -107,12 +109,46 @@ public class FXMLController {
 
     @FXML
     void iscrivi(ActionEvent event) {
+    	
+    	txtResult.clear();
+    	
+    	try {
+    		List<Corso> corsi = model.getCorsiByStudente(Integer.parseInt(txtMatricola.getText()));
+    		
+    		if (boxCorsi.getValue().equals("")) {
+    			txtResult.setText("Selezionare un corso.");
+    			return;
+    		}
+    		
+    		for (Corso c : corsi) {
+    			if (c.getCodins().equals(boxCorsi.getValue().substring(0, 7))) {
+    				txtResult.setText("Studente già iscritto al corso.");
+    				return;
+    			}
+    		}
+    		
+    		boolean successo = model.isciriviStudenteACorso(Integer.parseInt(txtMatricola.getText()), boxCorsi.getValue().substring(0, 7));
+    		
+    		if (successo) {
+    			txtResult.setText("Studente iscritto al corso!");
+    		} else {
+    			txtResult.setText("Errore nell'iscrizione dello studente, verificare la correttezza della matricola");
+    		}
+    		
+    		
+    	} catch (NumberFormatException e) {
+    		txtResult.setText("Errore: la matricola può contenere solo numeri.");
+    		return;
+    	}
+    	
+    	
 
     }
 
     @FXML
     void reset(ActionEvent event) {
     	
+    	boxCorsi.getSelectionModel().clearSelection();
     	txtResult.clear();
     	txtNome.clear();
     	txtCognome.clear();
